@@ -40,7 +40,10 @@ class StartScene extends egret.Sprite{
         start.addEventListener(egret.TouchEvent.TOUCH_TAP,this.onclikSatrt,this)
     }
     public onclikSatrt() { 
+        var sound:egret.Sound = RES.getRes("button");
+        sound.play(0,1);
         this.scene.removeChild(this);
+        this.scene.gameTime.start();
         GameData.game_state = GameData.Touch;
     }
 }

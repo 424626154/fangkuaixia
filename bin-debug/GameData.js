@@ -60,6 +60,8 @@ var GameData = (function () {
     GameData.End = 7;
     GameData.Victory = 8;
     GameData.b_life = false; //生命
+    GameData.game_timer_time = 1000;
+    GameData.GameTime = 0;
     return GameData;
 })();
 egret.registerClass(GameData,"GameData");

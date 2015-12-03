@@ -14,12 +14,47 @@
 			"name": "description",
 			"type": "json",
 			"url": "config/description.json"
+		},
+		{
+			"name": "button",
+			"type": "sound",
+			"url": "assets/button.ogg"
+		},
+		{
+			"name": "stick_grow_loop",
+			"type": "sound",
+			"url": "assets/stick_grow_loop.ogg"
+		},
+		{
+			"name": "kick",
+			"type": "sound",
+			"url": "assets/kick.ogg"
+		},
+		{
+			"name": "fall",
+			"type": "sound",
+			"url": "assets/fall.ogg"
+		},
+		{
+			"name": "score",
+			"type": "sound",
+			"url": "assets/score.ogg"
+		},
+		{
+			"name": "death",
+			"type": "sound",
+			"url": "assets/death.ogg"
+		},
+		{
+			"name": "victory",
+			"type": "sound",
+			"url": "assets/victory.ogg"
 		}
 	],
 	"groups": [
 		{
 			"name": "preload",
-			"keys": "bgImage,egretIcon"
+			"keys": "bgImage,egretIcon,button,stick_grow_loop,kick,fall,score,death,victory"
 		}
 	]
 }

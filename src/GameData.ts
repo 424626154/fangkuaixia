@@ -39,6 +39,9 @@ class GameData {
     
     public static b_life = false;//生命
     
+    public static game_timer_time = 1000;
+    public static GameTime = 0;
+    
     public constructor() {
     }
 	

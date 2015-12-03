@@ -9,6 +9,7 @@ class GameScene extends egret.Sprite {
     private stick: Stick;
     private startScene: StartScene;
     private endScene: EndScene;
+    public gameTime: egret.Timer;
     public constructor() {
         super();
         this.init();
@@ -34,9 +35,25 @@ class GameScene extends egret.Sprite {
         this.timer = new egret.Timer(GameData.timer_time,0);
         this.timer.addEventListener(egret.TimerEvent.TIMER,this.timerFunc,this);
         this.timer.start();
-        
+
         GameData.game_state = GameData.Start;
         this.startScene = new StartScene(this);
+
+        this.gameTime = new egret.Timer(GameData.game_timer_time,0);
+        this.gameTime.addEventListener(egret.TimerEvent.TIMER,this.gameTimerFunc,this);
+
+        this.timerText = new egret.TextField();
+        this.timerText.textAlign = egret.HorizontalAlign.CENTER;
+        this.timerText.verticalAlign = egret.VerticalAlign.MIDDLE;
+        this.timerText.fontFamily = "Arial";
+        this.timerText.textColor = 0xff0000;
+        this.timerText.size = 40;
+        this.timerText.text = "";
+        this.timerText.width = 80;
+        this.timerText.height = 80;
+        this.timerText.x = 0;
+        this.timerText.y = 0;
+        this.addChild(this.timerText);
 
     }
     /**
@@ -48,7 +65,9 @@ class GameScene extends egret.Sprite {
         var o_num_h = 0;
 
         var column = Math.floor(GameData.gamebg_w / GameData.base_w);
-        var obs_num = Math.ceil(column / GameData.obstacle_range);
+        //        egret.log(column);
+        var obs_num = Math.floor(column / GameData.obstacle_range);
+        //        egret.log(obs_num);
         for(var i = 0;i < obs_num;i++) {
             var index_x = i * GameData.obstacle_range + GameData.random(0,GameData.obstacle_range - GameData.obstacle_w);
             var obs = new Obstacle(index_x,this);
@@ -66,7 +85,7 @@ class GameScene extends egret.Sprite {
      * 添加棍子
      */
     public addStick() {
-//        egret.log("addStick:",GameData.lead_index);
+        //        egret.log("addStick:",GameData.lead_index);
         var obs = GameData.Obstacles[GameData.lead_index];
         this.stick = new Stick(obs.index_x + (GameData.obstacle_w - GameData.stick_w),this);
     }
@@ -86,9 +105,9 @@ class GameScene extends egret.Sprite {
                 GameData.b_touch = true;
                 break;
             case egret.TouchEvent.TOUCH_MOVE:
-//                if(!GameData.b_touch) {
-//                }
-            GameData.b_touch = true;
+                //                if(!GameData.b_touch) {
+                //                }
+                GameData.b_touch = true;
                 break;
             case egret.TouchEvent.TOUCH_END:
                 GameData.b_touch = false;
@@ -102,6 +121,11 @@ class GameScene extends egret.Sprite {
             this.growStick();
         }
     }
+    public gameTimerFunc(event: egret.TimerEvent) {
+        GameData.GameTime += 1;
+        //        egret.log("GameTime :",GameData.GameTime);
+        this.timerText.text = GameData.GameTime + "s";
+    }
     /**
      * 主角移动
      */
@@ -110,14 +134,14 @@ class GameScene extends egret.Sprite {
         var to_obs = GameData.Obstacles[GameData.lead_index + 1];
         var move_x = to_obs.index_x - from_obs.index_x - GameData.obstacle_w - this.stick.getRow();
         //        egret.log("move_x:",move_x);
-//        egret.log("GameData.Obstacles.length:" ,GameData.Obstacles.length);
+        //        egret.log("GameData.Obstacles.length:" ,GameData.Obstacles.length);
         if(move_x <= 0 && move_x >= - GameData.obstacle_w) {
             GameData.lead_move_step = to_obs.index_x - from_obs.index_x;
-//            egret.log("GameData.lead_index",GameData.lead_index);
+            //            egret.log("GameData.lead_index",GameData.lead_index);
             if(GameData.lead_index == GameData.Obstacles.length - 2) {
                 GameData.b_life = false;
                 GameData.end_state = 1;
-            } else { 
+            } else {
                 GameData.b_life = true;
             }
         } else {
@@ -138,12 +162,18 @@ class GameScene extends egret.Sprite {
 
     public moveScene() {
         var move_w = GameData.lead_move_step * GameData.base_w;
-        var to_x = this.x - GameData.lead_move_step * GameData.base_w;
-//        egret.log("to_x",to_x);
-//        egret.log("-(GameData.gamebg_w - GameData.getBgWidth())",-(GameData.gamebg_w - GameData.getBgWidth()));
-        if(to_x < -(GameData.gamebg_w - GameData.getBgWidth())){ 
+        var to_x = this.x - move_w;
+        //        egret.log("move_w",move_w);
+ 
+        //        egret.log("aa:",(GameData.gamebg_w - GameData.getBgWidth()));
+        //        egret.log("-(GameData.gamebg_w - GameData.getBgWidth())",-(GameData.gamebg_w - GameData.getBgWidth()));
+        if(to_x < -(GameData.gamebg_w - GameData.getBgWidth())) {
             to_x = -(GameData.gamebg_w - GameData.getBgWidth());
+        } else {
+            var sound: egret.Sound = RES.getRes("stick_grow_loop");
+            sound.play(0,3);
         }
+        //        egret.log("to_x",to_x);
         egret.Tween.get(this,{
             loop: false,//设置循环播放
             onChange: this.onChange,//设置更新函数
@@ -154,28 +184,30 @@ class GameScene extends egret.Sprite {
             .call(this.onComplete,this);//设置回调函数及作用域，可用于侦听动画完成
     }
     private onChange(): void {
-        
+
     }
 
     public onComplete() {
         GameData.game_state = GameData.Touch;
     }
-    
-    public endgame() { 
+    public endgame() {
+        this.gameTime.stop();
+        var sound: egret.Sound = RES.getRes("score");
+        sound.play(0,1);
         GameData.game_state = GameData.End;
         this.endScene = new EndScene(this);
         this.endScene.x = -this.x;
     }
-    
-    public again() { 
+
+    public again() {
         this.x = 0
-        for(var i = 0;i < GameData.Obstacles.length; i++){ 
+        for(var i = 0;i < GameData.Obstacles.length;i++) {
             var obs = GameData.Obstacles[i];
             this.removeChild(obs);
-//            egret.log(i);
+            //            egret.log(i);
         }
         GameData.Obstacles = new Array<Obstacle>();
-        
+
         GameData.lead_index = 0;
         this.removeChild(this.stick);
         this.removeChild(this.lead);

@@ -32,6 +32,8 @@ class Lead extends egret.Sprite {
     public move() {
         var to_x = this.x + GameData.lead_move_step * GameData.base_w;
         var tween_time = GameData.lead_move_step * GameData.base_tween_time;
+        var sound:egret.Sound = RES.getRes("kick");
+        sound.play(0,GameData.lead_move_step-1);
         //创建 Tween 对象
         egret.Tween.get(this,{
             loop: false,//设置循环播放
@@ -66,6 +68,8 @@ class Lead extends egret.Sprite {
     }
     
     public death() { 
+        var sound:egret.Sound = RES.getRes("death");
+        sound.play(0,1);
         //创建 Tween 对象
         egret.Tween.get(this,{
             loop: false,//设置循环播放
@@ -83,6 +87,8 @@ class Lead extends egret.Sprite {
         this.scene.endgame();
     }
     public victory() { 
+        var sound:egret.Sound = RES.getRes("victory");
+        sound.play(0,1);
         //创建 Tween 对象
         egret.Tween.get(this,{
             loop: false,//设置循环播放

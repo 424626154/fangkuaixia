@@ -29,6 +29,20 @@ var GameScene = (function (_super) {
         this.timer.start();
         GameData.game_state = GameData.Start;
         this.startScene = new StartScene(this);
+        this.gameTime = new egret.Timer(GameData.game_timer_time, 0);
+        this.gameTime.addEventListener(egret.TimerEvent.TIMER, this.gameTimerFunc, this);
+        this.timerText = new egret.TextField();
+        this.timerText.textAlign = egret.HorizontalAlign.CENTER;
+        this.timerText.verticalAlign = egret.VerticalAlign.MIDDLE;
+        this.timerText.fontFamily = "Arial";
+        this.timerText.textColor = 0xff0000;
+        this.timerText.size = 40;
+        this.timerText.text = "";
+        this.timerText.width = 80;
+        this.timerText.height = 80;
+        this.timerText.x = 0;
+        this.timerText.y = 0;
+        this.addChild(this.timerText);
     };
     /**
      * 添加障碍物
@@ -38,7 +52,9 @@ var GameScene = (function (_super) {
         var o_num_w = 0;
         var o_num_h = 0;
         var column = Math.floor(GameData.gamebg_w / GameData.base_w);
-        var obs_num = Math.ceil(column / GameData.obstacle_range);
+        //        egret.log(column);
+        var obs_num = Math.floor(column / GameData.obstacle_range);
+        //        egret.log(obs_num);
         for (var i = 0; i < obs_num; i++) {
             var index_x = i * GameData.obstacle_range + GameData.random(0, GameData.obstacle_range - GameData.obstacle_w);
             var obs = new Obstacle(index_x, this);
@@ -90,6 +106,11 @@ var GameScene = (function (_super) {
             this.growStick();
         }
     };
+    p.gameTimerFunc = function (event) {
+        GameData.GameTime += 1;
+        //        egret.log("GameTime :",GameData.GameTime);
+        this.timerText.text = GameData.GameTime + "s";
+    };
     /**
      * 主角移动
      */
@@ -127,12 +148,18 @@ var GameScene = (function (_super) {
     };
     p.moveScene = function () {
         var move_w = GameData.lead_move_step * GameData.base_w;
-        var to_x = this.x - GameData.lead_move_step * GameData.base_w;
-        //        egret.log("to_x",to_x);
+        var to_x = this.x - move_w;
+        //        egret.log("move_w",move_w);
+        //        egret.log("aa:",(GameData.gamebg_w - GameData.getBgWidth()));
         //        egret.log("-(GameData.gamebg_w - GameData.getBgWidth())",-(GameData.gamebg_w - GameData.getBgWidth()));
         if (to_x < -(GameData.gamebg_w - GameData.getBgWidth())) {
             to_x = -(GameData.gamebg_w - GameData.getBgWidth());
         }
+        else {
+            var sound = RES.getRes("stick_grow_loop");
+            sound.play(0, 3);
+        }
+        //        egret.log("to_x",to_x);
         egret.Tween.get(this, {
             loop: false,
             onChange: this.onChange,
@@ -148,6 +175,9 @@ var GameScene = (function (_super) {
         GameData.game_state = GameData.Touch;
     };
     p.endgame = function () {
+        this.gameTime.stop();
+        var sound = RES.getRes("score");
+        sound.play(0, 1);
         GameData.game_state = GameData.End;
         this.endScene = new EndScene(this);
         this.endScene.x = -this.x;

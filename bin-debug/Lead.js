@@ -32,6 +32,8 @@ var Lead = (function (_super) {
     p.move = function () {
         var to_x = this.x + GameData.lead_move_step * GameData.base_w;
         var tween_time = GameData.lead_move_step * GameData.base_tween_time;
+        var sound = RES.getRes("kick");
+        sound.play(0, GameData.lead_move_step - 1);
         //创建 Tween 对象
         egret.Tween.get(this, {
             loop: false,
@@ -64,6 +66,8 @@ var Lead = (function (_super) {
         }
     };
     p.death = function () {
+        var sound = RES.getRes("death");
+        sound.play(0, 1);
         //创建 Tween 对象
         egret.Tween.get(this, {
             loop: false,
@@ -80,6 +84,8 @@ var Lead = (function (_super) {
         this.scene.endgame();
     };
     p.victory = function () {
+        var sound = RES.getRes("victory");
+        sound.play(0, 1);
         //创建 Tween 对象
         egret.Tween.get(this, {
             loop: false,

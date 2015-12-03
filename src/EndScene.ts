@@ -40,6 +40,8 @@ class EndScene extends egret.Sprite{
     }
     
     public onclikSatrt() { 
+        var sound:egret.Sound = RES.getRes("button");
+        sound.play(0,1);
         this.scene.removeChild(this);
         this.scene.again();
     }

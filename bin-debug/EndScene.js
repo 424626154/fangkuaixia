@@ -38,6 +38,8 @@ var EndScene = (function (_super) {
         start.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onclikSatrt, this);
     };
     p.onclikSatrt = function () {
+        var sound = RES.getRes("button");
+        sound.play(0, 1);
         this.scene.removeChild(this);
         this.scene.again();
     };

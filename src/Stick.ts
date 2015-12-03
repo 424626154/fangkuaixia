@@ -42,6 +42,8 @@ class Stick extends egret.Sprite {
      * 增长
      */
     public grow() {
+        var sound:egret.Sound = RES.getRes("stick_grow_loop");
+        sound.play(0,1);
         this.row += 1;
         this.y = GameData.getBgHeight() - GameData.obstacle_h * GameData.base_h + GameData.stick_base_h * GameData.base_h;
         this.drawShape();
@@ -70,6 +72,8 @@ class Stick extends egret.Sprite {
     }
 
     private onComplete(): void {
+        var sound:egret.Sound = RES.getRes("kick");
+        sound.play(0,1);
         GameData.game_state = GameData.LeadMove;
         this.scene.moveLead();
     }
