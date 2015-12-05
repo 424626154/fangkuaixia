@@ -37,11 +37,14 @@ class GameBg extends egret.Sprite{
     
     public addRect(x:number,y:number) { 
         var rect: egret.Shape = new egret.Shape();
-        rect.graphics.beginFill(0x000000);
-        rect.graphics.drawRoundRect(x,y,GameData.base_w,GameData.base_h,4,4);
-        rect.graphics.endFill();
-        rect.graphics.beginFill(0xffffff);
-        rect.graphics.drawRoundRect(x+1,y+1,GameData.base_w-2,GameData.base_h-2,4,4);
+//        rect.graphics.beginFill(0x000000);
+//        rect.graphics.drawRoundRect(x,y,GameData.base_w,GameData.base_h,4,4);
+//        rect.graphics.endFill();
+//        rect.graphics.beginFill(0xffffff);
+//        rect.graphics.drawRoundRect(x+1,y+1,GameData.base_w-2,GameData.base_h-2,4,4);
+//        rect.graphics.endFill();
+        rect.graphics.beginFill(0xCCCCCC);
+        rect.graphics.drawRect(x,y,GameData.base_w,GameData.base_h);
         rect.graphics.endFill();
         this.addChild(rect);
     }   

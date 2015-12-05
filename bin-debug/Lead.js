@@ -18,11 +18,14 @@ var Lead = (function (_super) {
         for (var i = 0; i < GameData.lead_w; i++) {
             for (var j = 0; j < GameData.lead_h; j++) {
                 var rect = new egret.Shape();
-                rect.graphics.beginFill(0xffffff);
-                rect.graphics.drawRoundRect(i * GameData.base_w, j * GameData.base_h, GameData.base_w, GameData.base_h, 4, 4);
-                rect.graphics.endFill();
+                //                rect.graphics.beginFill(0xffffff);
+                //                rect.graphics.drawRoundRect(i * GameData.base_w,j * GameData.base_h,GameData.base_w,GameData.base_h,4,4);
+                //                rect.graphics.endFill();
+                //                rect.graphics.beginFill(0xff0000);
+                //                rect.graphics.drawRoundRect(i * GameData.base_w + 1,j * GameData.base_h + 1,GameData.base_w - 2,GameData.base_h - 2,4,4);
+                //                rect.graphics.endFill();
                 rect.graphics.beginFill(0xff0000);
-                rect.graphics.drawRoundRect(i * GameData.base_w + 1, j * GameData.base_h + 1, GameData.base_w - 2, GameData.base_h - 2, 4, 4);
+                rect.graphics.drawRect(i * GameData.base_w, j * GameData.base_h, GameData.base_w, GameData.base_h);
                 rect.graphics.endFill();
                 this.addChild(rect);
             }
@@ -52,6 +55,7 @@ var Lead = (function (_super) {
             GameData.game_state = GameData.SceneMove;
             this.scene.resetStick();
             this.scene.moveScene();
+            GameData.obsText.text = GameData.lead_index + "/" + (GameData.Obstacles.length - 1);
         }
         else {
             //            egret.log("GameData.end_state",GameData.end_state);

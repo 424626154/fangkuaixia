@@ -8,7 +8,7 @@ var game_file_list = [
 	"libs/modules/game/game.native.js",
 	"libs/modules/tween/tween.js",
 	"libs/modules/res/res.js",
-	"libs/modules/box2dlib/box2dlib.js",
+	"libs/modules/weixinapi/weixinapi.js",
 	"bin-debug/EndScene.js",
 	"bin-debug/GameBg.js",
 	"bin-debug/GameData.js",
@@ -17,6 +17,7 @@ var game_file_list = [
 	"bin-debug/LoadingUI.js",
 	"bin-debug/Main.js",
 	"bin-debug/Obstacle.js",
+	"bin-debug/SignPackage.js",
 	"bin-debug/StartScene.js",
 	"bin-debug/Stick.js",
 	//----auto game_file_list end----
@@ -54,7 +55,7 @@ egret_native.egretStart = function () {
 		showPaintRect: false,
 		showFPS: false,
 		fpsStyles: "x:0,y:0,size:30,textColor:0x00c200,bgAlpha:0.9",
-		showLog: true,
+		showLog: false,
 		logFilter: "",
 		maxTouches: 2,
 		textureScaleFactor: 1

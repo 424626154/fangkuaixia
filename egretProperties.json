@@ -21,9 +21,9 @@
     {
       "name": "res"
     },
-    {
-      "name": "box2dlib",
-	"path":"../box2dlib"
-    }
+	{
+	    "name": "weixinapi",
+	    "path": "../libsrc"
+	}
   ]
 }

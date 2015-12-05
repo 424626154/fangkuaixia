@@ -22,11 +22,14 @@ var Obstacle = (function (_super) {
         for (var i = 0; i < GameData.obstacle_w; i++) {
             for (var j = 0; j < GameData.obstacle_h; j++) {
                 var rect = new egret.Shape();
-                rect.graphics.beginFill(0xffffff);
-                rect.graphics.drawRoundRect(i * GameData.base_w, j * GameData.base_h, GameData.base_w, GameData.base_h, 4, 4);
-                rect.graphics.endFill();
+                //                rect.graphics.beginFill(0xffffff);
+                //                rect.graphics.drawRoundRect(i * GameData.base_w,j * GameData.base_h,GameData.base_w,GameData.base_h,4,4);
+                //                rect.graphics.endFill();
+                //                rect.graphics.beginFill(0x000000);
+                //                rect.graphics.drawRoundRect(i * GameData.base_w + 1,j * GameData.base_h + 1,GameData.base_w - 2,GameData.base_h - 2,4,4);
+                //                rect.graphics.endFill();
                 rect.graphics.beginFill(0x000000);
-                rect.graphics.drawRoundRect(i * GameData.base_w + 1, j * GameData.base_h + 1, GameData.base_w - 2, GameData.base_h - 2, 4, 4);
+                rect.graphics.drawRect(i * GameData.base_w, j * GameData.base_h, GameData.base_w, GameData.base_h);
                 rect.graphics.endFill();
                 this.addChild(rect);
             }

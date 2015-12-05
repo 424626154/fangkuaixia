@@ -31,18 +31,6 @@ var GameScene = (function (_super) {
         this.startScene = new StartScene(this);
         this.gameTime = new egret.Timer(GameData.game_timer_time, 0);
         this.gameTime.addEventListener(egret.TimerEvent.TIMER, this.gameTimerFunc, this);
-        this.timerText = new egret.TextField();
-        this.timerText.textAlign = egret.HorizontalAlign.CENTER;
-        this.timerText.verticalAlign = egret.VerticalAlign.MIDDLE;
-        this.timerText.fontFamily = "Arial";
-        this.timerText.textColor = 0xff0000;
-        this.timerText.size = 40;
-        this.timerText.text = "";
-        this.timerText.width = 80;
-        this.timerText.height = 80;
-        this.timerText.x = 0;
-        this.timerText.y = 0;
-        this.addChild(this.timerText);
     };
     /**
      * 添加障碍物
@@ -108,8 +96,8 @@ var GameScene = (function (_super) {
     };
     p.gameTimerFunc = function (event) {
         GameData.GameTime += 1;
-        //        egret.log("GameTime :",GameData.GameTime);
-        this.timerText.text = GameData.GameTime + "s";
+        //                egret.log("GameTime :",GameData.GameTime);
+        GameData.timerText.text = GameData.GameTime + "s";
     };
     /**
      * 主角移动
@@ -181,6 +169,8 @@ var GameScene = (function (_super) {
         GameData.game_state = GameData.End;
         this.endScene = new EndScene(this);
         this.endScene.x = -this.x;
+        GameData.timerText.text = "";
+        GameData.obsText.text = "";
     };
     p.again = function () {
         this.x = 0;

@@ -23,11 +23,14 @@ var Stick = (function (_super) {
     p.drawShape = function () {
         this.rect.graphics.clear();
         for (var i = 0; i < this.row; i++) {
-            this.rect.graphics.beginFill(0xffffff);
-            this.rect.graphics.drawRoundRect(0, i * GameData.base_h, GameData.base_w, GameData.base_h, 4, 4);
-            this.rect.graphics.endFill();
+            //            this.rect.graphics.beginFill(0xffffff);
+            //            this.rect.graphics.drawRoundRect(0,i * GameData.base_h,GameData.base_w,GameData.base_h,4,4);
+            //            this.rect.graphics.endFill();
+            //            this.rect.graphics.beginFill(0x666633);
+            //            this.rect.graphics.drawRoundRect(1,i * GameData.base_h + 1,GameData.base_w - 2,GameData.base_h - 2,4,4);
+            //            this.rect.graphics.endFill();
             this.rect.graphics.beginFill(0x666633);
-            this.rect.graphics.drawRoundRect(1, i * GameData.base_h + 1, GameData.base_w - 2, GameData.base_h - 2, 4, 4);
+            this.rect.graphics.drawRect(0, i * GameData.base_h, GameData.base_w, GameData.base_h);
             this.rect.graphics.endFill();
             this.addChild(this.rect);
         }

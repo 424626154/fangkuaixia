@@ -42,18 +42,7 @@ class GameScene extends egret.Sprite {
         this.gameTime = new egret.Timer(GameData.game_timer_time,0);
         this.gameTime.addEventListener(egret.TimerEvent.TIMER,this.gameTimerFunc,this);
 
-        this.timerText = new egret.TextField();
-        this.timerText.textAlign = egret.HorizontalAlign.CENTER;
-        this.timerText.verticalAlign = egret.VerticalAlign.MIDDLE;
-        this.timerText.fontFamily = "Arial";
-        this.timerText.textColor = 0xff0000;
-        this.timerText.size = 40;
-        this.timerText.text = "";
-        this.timerText.width = 80;
-        this.timerText.height = 80;
-        this.timerText.x = 0;
-        this.timerText.y = 0;
-        this.addChild(this.timerText);
+
 
     }
     /**
@@ -123,8 +112,8 @@ class GameScene extends egret.Sprite {
     }
     public gameTimerFunc(event: egret.TimerEvent) {
         GameData.GameTime += 1;
-        //        egret.log("GameTime :",GameData.GameTime);
-        this.timerText.text = GameData.GameTime + "s";
+//                egret.log("GameTime :",GameData.GameTime);
+        GameData.timerText.text = GameData.GameTime + "s";
     }
     /**
      * 主角移动
@@ -197,6 +186,8 @@ class GameScene extends egret.Sprite {
         GameData.game_state = GameData.End;
         this.endScene = new EndScene(this);
         this.endScene.x = -this.x;
+        GameData.timerText.text = "";
+        GameData.obsText.text = "";
     }
 
     public again() {
